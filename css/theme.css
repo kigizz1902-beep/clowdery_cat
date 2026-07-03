@@ -1,0 +1,327 @@
+/* --------------------------------------------------------------------------
+   21. 장소 카드 (홈 리스트 / 추천 / 검색 / 일지)
+-------------------------------------------------------------------------- */
+/* 에디토리얼 카드 — 상단 대형 사진 + 사진 위 컬러 태그 오버레이 */
+.place-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--color-surface);
+  border: var(--hairline-w) solid var(--color-hairline);
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  transition: transform var(--motion-fast) var(--ease-standard),
+              box-shadow var(--motion-standard) var(--ease-standard);
+}
+.place-card:hover { transform: translateY(-3px); }
+.place-card__thumb {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  background: var(--color-surface-alt);
+  background-size: cover; background-position: center;
+  display: grid; place-items: center;
+  font-size: 60px;
+}
+.place-card__cat {
+  position: absolute; left: var(--sp-md); top: var(--sp-md);
+  z-index: 1;
+}
+.place-card__cat .tag { box-shadow: 0 2px 8px rgba(0,0,0,0.16); font-weight: var(--fw-semi); }
+.place-card__body {
+  padding: var(--sp-lg);
+  display: flex; flex-direction: column; gap: 5px;
+  min-width: 0;
+}
+.place-card__name {
+  font-weight: var(--fw-black);
+  font-size: var(--fs-feature);
+  color: var(--color-heading);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+.place-card__visited { font-size: 0.85em; }
+.place-card__metaline { font-size: var(--fs-caption); }
+.place-card__reason {
+  margin-top: 2px;
+  font-size: var(--fs-body);
+  color: var(--color-body);
+  border-left: 3px solid var(--color-accent);
+  padding-left: var(--sp-md);
+  line-height: 1.5;
+}
+.place-card__meta { font-size: var(--fs-caption); color: var(--color-muted); }
+
+
+/* --------------------------------------------------------------------------
+   22. 별점 위젯 (0.5 단위)
+-------------------------------------------------------------------------- */
+.star-rating { display: flex; align-items: center; gap: 2px; }
+.star {
+  position: relative;
+  width: 30px; height: 30px;
+  border: 0; background: none; padding: 0; cursor: pointer;
+  color: var(--color-faint);
+}
+.star::before,
+.star .star__fill::before {
+  content: "";
+  position: absolute; top: 0; left: 0;
+  width: 30px; height: 30px;
+  background-color: currentColor;
+  -webkit-mask: center / 26px 26px no-repeat;
+          mask: center / 26px 26px no-repeat;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='black'%3E%3Cpath d='M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 18.6 6.1 21.5l1.2-6.5L2.5 9.4l6.6-.9z'/%3E%3C/svg%3E");
+          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='black'%3E%3Cpath d='M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 18.6 6.1 21.5l1.2-6.5L2.5 9.4l6.6-.9z'/%3E%3C/svg%3E");
+}
+.star .star__fill {
+  position: absolute; top: 0; left: 0; height: 100%;
+  width: 0; overflow: hidden;
+  color: var(--color-accent);
+}
+.star-value { margin-left: var(--sp-sm); font-size: var(--fs-caption); color: var(--color-muted); }
+.star-clear {
+  margin-left: var(--sp-sm);
+  border: var(--hairline-w) solid var(--color-hairline);
+  background: var(--color-surface);
+  color: var(--color-muted);
+  font-size: var(--fs-caption);
+  padding: 4px 10px;
+  border-radius: 0;
+  cursor: pointer;
+}
+
+
+/* --------------------------------------------------------------------------
+   23. 리액션 선택 상태 / 카운트
+-------------------------------------------------------------------------- */
+.record-card__reactions button.is-selected {
+  border-color: var(--color-primary);
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+}
+.reaction-count { font-variant-numeric: tabular-nums; }
+
+/* 메시지 미리보기 + 입력 */
+.msg-line { font-size: var(--fs-caption); color: var(--color-body); padding: 4px 0; }
+.msg-line strong { color: var(--color-ink); font-weight: var(--fw-semi); }
+.msg-toggle {
+  background: none; border: none; color: var(--color-primary-deep);
+  font-size: var(--fs-caption); font-weight: var(--fw-semi);
+  padding: 4px 0; cursor: pointer;
+}
+.msg-input-row { display: flex; gap: var(--sp-sm); margin-top: var(--sp-sm); }
+.msg-input {
+  flex: 1; font-family: inherit; font-size: var(--fs-caption);
+  border: var(--hairline-w) solid var(--color-hairline); border-radius: 0;
+  padding: 8px 14px; color: var(--color-ink);
+}
+.msg-input:focus { outline: none; border-color: var(--color-primary); }
+.msg-send {
+  border: none; background: var(--color-primary); color: var(--color-on-primary);
+  border-radius: 0; padding: 8px 16px; font-weight: var(--fw-bold);
+  font-size: var(--fs-caption); cursor: pointer;
+}
+
+
+/* --------------------------------------------------------------------------
+   24. 알림 항목
+-------------------------------------------------------------------------- */
+.noti-item {
+  display: flex; gap: var(--sp-md); align-items: flex-start;
+  padding: var(--sp-md) var(--sp-lg);
+  background: var(--color-surface);
+  border: var(--hairline-w) solid var(--color-hairline);
+  border-radius: var(--r-lg);
+  cursor: pointer;
+}
+.noti-item.is-unread { border-color: var(--color-accent); background: #FFFaf5; }
+.noti-item__dot {
+  width: 8px; height: 8px; border-radius: var(--r-pill);
+  background: var(--color-accent); margin-top: 7px; flex-shrink: 0;
+  visibility: hidden;
+}
+.noti-item.is-unread .noti-item__dot { visibility: visible; }
+.noti-item__body { flex: 1; }
+.noti-item__time { font-size: var(--fs-caption); color: var(--color-faint); margin-top: 2px; }
+
+
+/* --------------------------------------------------------------------------
+   25. 프로필 통계 그리드
+-------------------------------------------------------------------------- */
+.stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-md); }
+.stat-cell { text-align: center; padding: var(--sp-md); }
+.stat-cell__num { font-size: 1.5rem; font-weight: var(--fw-bold); color: var(--color-primary); }
+.stat-cell__label { font-size: var(--fs-caption); color: var(--color-muted); margin-top: 2px; }
+
+
+/* --------------------------------------------------------------------------
+   26. 범용 모달 (생성/설정 등) + 토스트
+-------------------------------------------------------------------------- */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 200;
+  display: grid; place-items: center;
+  background: rgba(25,25,25,.4);
+  max-width: var(--frame-max); margin-inline: auto;
+  padding: var(--sp-lg);
+}
+.modal-panel {
+  width: 100%;
+  background: var(--color-surface);
+  border-radius: var(--r-lg);
+  padding: var(--sp-xl) var(--sp-lg);
+  display: flex; flex-direction: column; gap: var(--sp-md);
+}
+.modal-panel h3 { font-size: var(--fs-feature); font-weight: var(--fw-bold); color: var(--color-primary); }
+.modal-panel label { font-size: var(--fs-caption); font-weight: var(--fw-semi); color: var(--color-muted); }
+.modal-panel input[type="text"],
+.modal-panel textarea {
+  width: 100%; font-family: inherit; font-size: var(--fs-body);
+  border: var(--hairline-w) solid var(--color-hairline); border-radius: var(--r-sm);
+  padding: 12px var(--sp-lg); color: var(--color-ink);
+}
+.modal-panel input:focus, .modal-panel textarea:focus { outline: none; border-color: var(--color-primary); }
+.modal-actions { display: flex; gap: var(--sp-md); margin-top: var(--sp-sm); }
+.modal-actions button { flex: 1; padding: 12px; border-radius: 0; font-weight: var(--fw-semi); cursor: pointer; }
+.modal-actions .btn-primary { border: none; background: var(--color-primary); color: var(--color-on-primary); font-weight: var(--fw-bold); }
+.modal-actions .btn-ghost { border: var(--hairline-w) solid var(--color-hairline); background: transparent; color: var(--color-muted); }
+
+.toast {
+  position: fixed; left: 50%; bottom: calc(var(--nav-h) + 20px);
+  transform: translateX(-50%);
+  z-index: 300;
+  background: var(--color-ink); color: #fff;
+  font-size: var(--fs-caption); font-weight: var(--fw-med);
+  padding: 12px 20px; border-radius: var(--r-pill);
+  opacity: 0; transition: opacity var(--motion-standard) var(--ease-standard);
+  pointer-events: none; white-space: nowrap;
+}
+.toast.is-show { opacity: 1; }
+
+/* 폼 검증 힌트 / 비활성 버튼 */
+.field-hint { font-size: var(--fs-caption); color: var(--color-faint); margin-top: 4px; }
+.field-hint.is-error { color: #C0392B; }
+button:disabled { opacity: .5; cursor: not-allowed; }
+
+/* 라디오/체크 리스트 (공개범위, 클라우더 선택) */
+.opt-list { display: flex; flex-direction: column; gap: var(--sp-sm); }
+.opt-item { display: flex; align-items: center; gap: var(--sp-sm); font-size: var(--fs-body); color: var(--color-ink); cursor: pointer; }
+.opt-item input { accent-color: var(--color-primary); width: 18px; height: 18px; }
+
+/* 사진 프리뷰 */
+.photo-preview { margin-top: var(--sp-md); border-radius: var(--r-md); max-height: 220px; width: 100%; object-fit: cover; }
+
+
+/* ==========================================================================
+   27. FELINE EXPLORER 오버라이드 (DESIGN_cat.md)
+   Soft-Tactile 재테마: Catread 로고 · 디스플레이 폰트 · 앰비언트 그림자 ·
+   플로팅 pill 내비 · 파우패드 핑크 칩 · 태비 오렌지 포커스
+   (토큰 뒤 정의되어 cascade 로 이전 규칙을 덮음)
+   ========================================================================== */
+
+/* 타이포 — 헤드라인은 디스플레이 폰트 + 네이비 앵커 */
+.screen__header h2,
+#app-main > section > h2 { font-family: var(--font-display); color: var(--color-heading); }
+.record-card__oneline,
+#share-landing__oneline { font-family: var(--font-display); }
+
+/* Clowdery 워드마크 — Catread 폰트 */
+#global-header__logo {
+  font-family: var(--font-brand);
+  color: var(--color-primary-deep);
+  font-size: 1.75rem;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  cursor: pointer;
+}
+#global-header__tagline { font-family: var(--font-sans); }
+
+/* 헤더 — 하드 경계 대신 부드러운 그림자 */
+#global-header {
+  border-bottom: none;
+  box-shadow: 0 2px 14px rgba(38, 51, 46, 0.06);
+}
+
+/* Level 1 표면 — 화이트 카드 + 파우패드 핑크 소프트 보더 + 앰비언트 그림자 */
+.place-card,
+.record-card,
+.noti-item,
+.onboarding__cat-item,
+#place-detail__friend-records,
+#place-detail__similar,
+#clowder-detail__members,
+#clowder-detail__feed,
+#profile__stats {
+  border: var(--border-soft);
+  box-shadow: var(--shadow-1);
+}
+.record-card { padding: var(--sp-xl); }           /* Airy 24px */
+.place-card:hover,
+.onboarding__cat-item:hover { border-color: var(--color-accent); box-shadow: var(--shadow-2); }
+
+/* Level 2 — 모달/바텀시트 딥 섀도 */
+.modal-panel { box-shadow: var(--shadow-2); }
+.modal-panel h3 { font-family: var(--font-display); color: var(--color-heading); }
+#completion-modal__panel {
+  box-shadow: var(--shadow-2);
+  border-radius: var(--r-xl) var(--r-xl) 0 0;   /* eared 상단 코너 */
+}
+#completion-modal__title { font-family: var(--font-display); }
+
+/* 칩 & 태그 — 기본 태그는 브랜드 틴트 (카테고리 태그는 인라인 컬러가 우선) */
+.tag { background: var(--color-primary-tint); color: var(--color-primary-deep); }
+.tag--mint { background: #EDEDED; color: var(--color-ink); }
+.tag--pink { background: #EDEDED; color: var(--color-ink); }
+.tag--accent { background: #EDEDED; color: var(--color-ink); }
+.chip { border-color: rgba(0, 0, 0, 0.12); }
+
+/* 리액션 호버 / 알림 미확인 — 브랜드 액센트 톤 */
+.record-card__reactions button:hover { border-color: var(--color-primary); background: var(--color-primary-tint); }
+.noti-item.is-unread { background: #F2F2F2; border-color: var(--color-accent); }
+.map-marker--me { box-shadow: 0 0 0 3px rgba(95, 180, 156, 0.30); }
+
+/* 입력 포커스 — 태비 오렌지 링 */
+#home__search-input:focus,
+#write__oneline-input:focus,
+#write__date-input:focus,
+.msg-input:focus,
+.modal-panel input:focus,
+.modal-panel textarea:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 1.5px var(--color-accent);
+}
+
+/* 플로팅 바텀 내비 — pill 형태 + 활성 오렌지 인디케이터 */
+#global-nav {
+  bottom: 12px;
+  width: calc(100% - 2 * var(--sp-lg));
+  max-width: calc(var(--frame-max) - 2 * var(--sp-lg));
+  height: 60px;
+  background: var(--color-surface);
+  border: var(--border-soft);
+  border-top: var(--border-soft);
+  border-radius: var(--r-pill);
+  box-shadow: var(--shadow-2);
+  padding-bottom: 0;
+}
+#global-nav a { border-radius: var(--r-pill); margin: 6px 3px; transition: background var(--motion-fast) var(--ease-standard), color var(--motion-fast) var(--ease-standard); }
+#global-nav a.is-current {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+}
+#global-nav a.is-current::before { background-color: var(--color-on-primary); }
+
+/* 지도 마커 — 미방문 딥오렌지 / 방문 브라이트오렌지 */
+.map-marker--pin { color: var(--color-primary); }
+.map-marker--paw { color: var(--color-accent); }
+
+/* 프라이머리 CTA — 파우 프레스 스퀴시 0.95 */
+#onboarding__confirm-btn:active,
+#place-detail__write-btn:active,
+#write__submit-btn:active,
+#clowders__create-btn:active,
+#completion-modal__share-btn:active,
+#share-landing__open-app:active { transform: scale(0.95); }

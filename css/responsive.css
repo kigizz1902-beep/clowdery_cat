@@ -1,0 +1,155 @@
+/* ==========================================================================
+   CLOWDERY — responsive.css
+   반응형 웹앱: 모바일 우선(기본) → 태블릿 → 데스크톱
+   - --frame-max 토큰을 브레이크포인트별로 확장 (헤더·메인·플로팅 내비·모달이 함께 반응)
+   - 세로 리스트를 넓은 화면에서 그리드로 전환
+   맨 마지막에 로드되어 이전 규칙을 오버라이드.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   태블릿 세로 (≥600px) — 프레임 확장 + 여백 증가
+-------------------------------------------------------------------------- */
+@media (min-width: 600px) {
+  :root { --frame-max: 600px; }
+  #app-main > section { padding: var(--sp-xl); }
+  #home__map { height: 320px; }
+  #place-detail__hero { height: 280px; }
+}
+
+/* --------------------------------------------------------------------------
+   태블릿 가로 / 소형 데스크톱 (≥900px) — 2컬럼 그리드
+-------------------------------------------------------------------------- */
+@media (min-width: 900px) {
+  :root { --frame-max: 880px; }
+
+  /* 리스트 → 2열 그리드 */
+  #home__place-list,
+  #recommend__list,
+  #my-records__list,
+  #search__result-list,
+  #clowders__list,
+  #feed__record-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--sp-md);
+    align-items: start;
+  }
+  /* 추천 배너·빈 상태 안내는 전체 폭 차지 */
+  #recommend__list > p,
+  #recommend__list:empty::after,
+  #my-records__list:empty::after,
+  #search__result-list:empty::after,
+  #clowders__list:empty::after,
+  #feed__record-list > li.faint,
+  #feed__record-list > .feed__empty { grid-column: 1 / -1; }
+
+  #home__map { height: 380px; }
+  #place-detail__hero { height: 320px; }
+
+  /* 플로팅 내비는 과하게 넓어지지 않도록 캡 */
+  #global-nav { max-width: 560px; }
+
+  /* 데스크톱 히어로 타이포 살짝 확대 */
+  #screen-onboarding__title { font-size: 2.25rem; }
+}
+
+/* --------------------------------------------------------------------------
+   데스크톱 (≥1240px) — 3컬럼 + 더 넓은 프레임
+-------------------------------------------------------------------------- */
+@media (min-width: 1240px) {
+  :root { --frame-max: 1040px; }
+
+  #home__place-list,
+  #recommend__list,
+  #my-records__list,
+  #search__result-list,
+  #clowders__list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  #feed__record-list { grid-template-columns: repeat(2, 1fr); }
+
+  #home__map { height: 440px; }
+}
+
+/* --------------------------------------------------------------------------
+   포인터가 있는 큰 화면 — 데스크톱 프레임 경계 강조(카드형 앱)
+-------------------------------------------------------------------------- */
+@media (min-width: 900px) {
+  body {
+    min-height: 100vh;
+    box-shadow: 0 0 0 1px var(--color-hairline), var(--shadow-1);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   데스크톱 (≥900px) — 하단 플로팅 내비 → 상단 가로 내비
+   flex order 로 [헤더 → 내비 → 메인] 재배치 (DOM 수정 없이)
+-------------------------------------------------------------------------- */
+@media (min-width: 900px) {
+  #app-main { order: 1; padding-bottom: var(--sp-xl); }
+
+  #global-nav {
+    order: 0;
+    position: sticky; top: var(--header-h); bottom: auto;
+    left: auto; transform: none;
+    width: 100%; max-width: none; height: auto;
+    flex-direction: row; justify-content: center; gap: var(--sp-xs);
+    background: var(--color-canvas);
+    border: none; border-bottom: var(--hairline-w) solid var(--color-hairline);
+    border-radius: 0; box-shadow: none;
+    padding: var(--sp-sm) var(--sp-lg);
+    z-index: 90;
+  }
+  #global-nav a {
+    flex: 0 0 auto;
+    flex-direction: row; gap: var(--sp-xs);
+    font-size: var(--fs-body); font-weight: var(--fw-semi);
+    padding: 8px 18px; margin: 0;
+    border-radius: var(--r-pill);
+  }
+  #global-nav a::before { width: 20px; height: 20px; }
+
+  /* 집중 화면(상세·작성 등)에서도 데스크톱은 내비 유지 */
+  body.focus-mode #global-nav { display: flex; }
+  body.focus-mode #app-main { padding-bottom: var(--sp-xl); }
+
+  /* 포커스가 필요한 화면은 과하게 넓어지지 않도록 폭 제한 */
+  #screen-onboarding,
+  #screen-write { max-width: 620px; margin-inline: auto; }
+}
+
+/* --------------------------------------------------------------------------
+   데스크톱 (≥900px) — 장소 상세 2단 레이아웃
+   좌: 대표 이미지(세로 확장) / 우: 추천 이유·지인 발자국·유사 장소
+-------------------------------------------------------------------------- */
+@media (min-width: 900px) {
+  #place-detail__main {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    grid-template-areas:
+      "title   title"
+      "hero    reason"
+      "hero    friends"
+      "hero    similar";
+    grid-template-rows: auto auto auto 1fr;
+    gap: var(--sp-lg) var(--sp-xl);
+    align-items: start;
+  }
+  #place-detail__main > header { grid-area: title; }
+  #place-detail__hero {
+    grid-area: hero;
+    height: 100%; min-height: 380px;
+    margin: 0;
+    position: sticky; top: calc(var(--header-h) + 64px);
+  }
+  #place-detail__reason { grid-area: reason; margin-bottom: 0; }
+  #place-detail__friend-records { grid-area: friends; margin-bottom: 0; }
+  #place-detail__similar { grid-area: similar; margin-bottom: 0; }
+
+  /* CTA — 하단 고정 대신 자연 흐름, 좌측 정렬 */
+  #place-detail__cta {
+    position: static;
+    max-width: 420px;
+    margin-top: var(--sp-lg);
+  }
+}

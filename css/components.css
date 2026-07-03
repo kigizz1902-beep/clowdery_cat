@@ -1,0 +1,503 @@
+/* --------------------------------------------------------------------------
+   8. 카테고리 / 리액션 칩 (badge)
+-------------------------------------------------------------------------- */
+.record-card__reactions button {
+  border: var(--hairline-w) solid var(--color-hairline);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font-size: var(--fs-caption);
+  font-weight: var(--fw-med);
+  padding: 8px 14px;
+  border-radius: var(--r-pill);
+  white-space: nowrap;
+  transition: border-color var(--motion-fast) var(--ease-standard),
+              background var(--motion-fast) var(--ease-standard);
+}
+.record-card__reactions button:hover {
+  border-color: var(--color-accent);
+  background: #FBEFE4;
+}
+
+
+/* --------------------------------------------------------------------------
+   9. 장소 상세
+-------------------------------------------------------------------------- */
+#place-detail__meta { color: var(--color-muted); font-size: var(--fs-body); margin-top: 4px; }
+
+#place-detail__hero {
+  position: relative;
+  height: 320px;
+  overflow: hidden;
+  border-radius: var(--r-xl);
+  background: var(--color-surface-alt);
+  border: var(--hairline-w) solid var(--color-hairline);
+  margin: var(--sp-lg) 0 var(--sp-xl);
+  display: grid; place-items: center;
+  color: var(--color-faint); font-size: var(--fs-caption);
+  box-shadow: var(--shadow-1);
+}
+#place-detail__hero::after { content: "대표 이미지"; }
+#place-detail__hero:has(img)::after { content: none; }   /* 사진 있으면 자리표시 제거 */
+#place-detail__hero img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+
+/* 추천 이유 — 오렌지 강조선(발자국 액센트) */
+#place-detail__reason {
+  padding: var(--sp-lg);
+  background: var(--color-surface);
+  border-left: 4px solid var(--color-accent);
+  border-radius: 0 var(--r-md) var(--r-md) 0;
+  color: var(--color-heading);
+  font-size: var(--fs-feature);
+  font-weight: var(--fw-semi);
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  margin-bottom: var(--sp-lg);
+  box-shadow: var(--shadow-1);
+}
+#place-detail__reason:empty::after {
+  content: "추천 이유가 여기에 표시됩니다";
+  color: var(--color-faint);
+}
+
+#place-detail__friend-records,
+#place-detail__similar {
+  margin-bottom: var(--sp-lg);
+  padding: var(--sp-lg);
+  background: var(--color-surface);
+  border: var(--hairline-w) solid var(--color-hairline);
+  border-radius: var(--r-lg);
+  min-height: 72px;
+}
+
+#place-detail__cta {
+  display: flex;
+  gap: var(--sp-md);
+  position: sticky;
+  bottom: calc(var(--nav-h) + var(--sp-md));
+}
+#place-detail__cta button { flex: 1; }
+
+
+/* --------------------------------------------------------------------------
+   10. 발자국 남기기 — 폼
+-------------------------------------------------------------------------- */
+#write__form { display: flex; flex-direction: column; gap: var(--sp-lg); }
+
+#write__form fieldset {
+  border: var(--hairline-w) solid var(--color-hairline);
+  border-radius: var(--r-sm);
+  padding: var(--sp-lg);
+  min-height: 56px;
+}
+#write__form legend {
+  font-size: var(--fs-caption);
+  font-weight: var(--fw-semi);
+  color: var(--color-muted);
+  padding: 0 var(--sp-xs);
+}
+
+#write__photo-field {
+  border: var(--hairline-w) dashed var(--color-hairline);
+  border-radius: var(--r-sm);
+  padding: var(--sp-lg);
+  background: var(--color-surface-alt);
+}
+#write__oneline-input { min-height: 88px; resize: vertical; }
+#write__submit-btn { width: 100%; margin-top: var(--sp-sm); }
+
+
+/* --------------------------------------------------------------------------
+   11. 리스트형 화면 공통 (추천 / 일지 / 검색 / 클라우더 / 알림)
+-------------------------------------------------------------------------- */
+#recommend__list,
+#my-records__list,
+#search__result-list,
+#clowders__list,
+#notifications__list,
+#feed__record-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-md);
+}
+
+/* 비어있는 리스트 자리표시 (JS 미주입 시 폴백) */
+#recommend__list:empty::after,
+#my-records__list:empty::after,
+#search__result-list:empty::after,
+#clowders__list:empty::after,
+#notifications__list:empty::after {
+  content: "아직 표시할 항목이 없어요";
+  display: block;
+  padding: var(--sp-xl);
+  text-align: center;
+  color: var(--color-faint);
+  background: var(--color-surface);
+  border: var(--hairline-w) solid var(--color-hairline);
+  border-radius: var(--r-lg);
+}
+
+/* 빈 화면 컴포넌트 (emptyState 헬퍼) */
+.empty-state {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 6px;
+  padding: var(--sp-xxl) var(--sp-lg);
+  background: var(--color-surface);
+  border: var(--hairline-w) dashed var(--color-hairline);
+  border-radius: var(--r-lg);
+}
+.empty-state__emoji {
+  font-size: 34px;
+  width: 64px; height: 64px;
+  display: grid; place-items: center;
+  border-radius: var(--r-pill);
+  background: var(--color-primary-tint);
+  margin-bottom: var(--sp-xs);
+}
+.empty-state__title { font-weight: var(--fw-semi); color: var(--color-ink); font-size: var(--fs-body); }
+.empty-state__sub { font-size: var(--fs-caption); color: var(--color-muted); line-height: 1.5; }
+
+/* 필터 바 (탭 / 그룹 선택) */
+#feed__clowder-tabs,
+#my-records__filter {
+  display: flex;
+  gap: var(--sp-sm);
+  overflow-x: auto;
+  margin-bottom: var(--sp-lg);
+  min-height: 40px;
+}
+
+
+/* --------------------------------------------------------------------------
+   12. 피드 — 기록 카드
+-------------------------------------------------------------------------- */
+.feed__record-card { list-style: none; }
+
+.record-card {
+  background: var(--color-surface);
+  border: var(--hairline-w) solid var(--color-hairline);
+  border-radius: var(--r-lg);
+  padding: var(--sp-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-md);
+}
+.record-card__header { min-height: 32px; }
+.record-card__photo {
+  height: 300px;
+  /* 카드 좌우 여백(--sp-xl)을 상쇄해 풀블리드 사진 */
+  margin: 0 calc(-1 * var(--sp-xl));
+  background: var(--color-surface-alt);
+  display: grid; place-items: center;
+  color: var(--color-faint); font-size: var(--fs-caption);
+  overflow: hidden;
+}
+.record-card__photo::after { content: "사용자 사진"; }
+.record-card__photo img { border-radius: 0 !important; }
+.record-card__oneline {
+  color: var(--color-heading);
+  font-size: var(--fs-feature);
+  font-weight: var(--fw-bold);
+  letter-spacing: -0.01em;
+  line-height: 1.35;
+}
+.record-card__reactions { display: flex; flex-wrap: wrap; gap: var(--sp-sm); }
+.record-card__messages { min-height: 24px; }
+
+
+/* --------------------------------------------------------------------------
+   13. 클라우더 상세 / 프로필 — 섹션 블록
+-------------------------------------------------------------------------- */
+#clowder-detail__members,
+#clowder-detail__feed,
+#profile__stats {
+  padding: var(--sp-lg);
+  background: var(--color-surface);
+  border: var(--hairline-w) solid var(--color-hairline);
+  border-radius: var(--r-lg);
+  min-height: 72px;
+  margin-bottom: var(--sp-md);
+}
+
+#clowders__create-btn { margin-top: var(--sp-md); }
+#screen-clowders .screen__header { display: flex; flex-direction: column; align-items: flex-start; gap: var(--sp-md); }
+
+#clowder-detail__actions { display: flex; gap: var(--sp-md); }
+#clowder-detail__actions button { flex: 1; }
+
+/* 프로필 헤더 — 고양이 아바타 자리 */
+#profile__header {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-lg);
+  margin-bottom: var(--sp-lg);
+}
+/* 아바타(고양이 이모지)는 app.js가 .cat-avatar 로 주입 */
+
+#profile__settings { display: flex; flex-direction: column; gap: 2px; margin-top: var(--sp-md); }
+#profile__settings button {
+  text-align: left;
+  border: none;
+  background: transparent;
+  color: var(--color-ink);
+  font-size: var(--fs-body);
+  font-weight: var(--fw-med);
+  padding: var(--sp-lg) var(--sp-md);
+  border-bottom: var(--hairline-w) solid var(--color-hairline);
+  transition: background var(--motion-fast) var(--ease-standard);
+}
+#profile__settings button:hover { background: var(--color-surface-alt); }
+
+
+/* --------------------------------------------------------------------------
+   14. 공유 랜딩
+-------------------------------------------------------------------------- */
+#share-landing__photo {
+  height: 240px;
+  background: var(--color-surface-alt);
+  border: var(--hairline-w) solid var(--color-hairline);
+  border-radius: var(--r-lg);
+  margin: var(--sp-lg) 0;
+  display: grid; place-items: center;
+  color: var(--color-faint); font-size: var(--fs-caption);
+}
+#share-landing__photo::after { content: "공유 이미지"; }
+#share-landing__oneline { color: var(--color-ink); font-size: var(--fs-feature); font-weight: var(--fw-semi); }
+#share-landing__place { color: var(--color-muted); margin-top: 4px; }
+#share-landing__cta { margin-top: var(--sp-xl); }
+#share-landing__open-app { width: 100%; }
+
+
+/* --------------------------------------------------------------------------
+   15. 완료 모달 (Dialog)
+-------------------------------------------------------------------------- */
+#completion-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  place-items: end center;
+  background: rgba(25, 25, 25, 0.4);
+  max-width: var(--frame-max);
+  margin-inline: auto;
+}
+#completion-modal[hidden] { display: none; }
+
+#completion-modal__panel {
+  width: 100%;
+  background: var(--color-surface);
+  border-radius: var(--r-lg) var(--r-lg) 0 0;
+  padding: var(--sp-xl) var(--sp-lg) var(--sp-xxl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-md);
+}
+#completion-modal__emoji {
+  align-self: center;
+  font-size: 36px;
+  width: 68px; height: 68px;
+  display: grid; place-items: center;
+  border-radius: var(--r-pill);
+  background: var(--color-primary-tint);
+  margin-bottom: var(--sp-xs);
+}
+#completion-modal__title {
+  font-size: var(--fs-feature);
+  font-weight: var(--fw-bold);
+  color: var(--color-primary);
+  text-align: center;
+}
+#completion-modal__sub {
+  color: var(--color-muted);
+  font-size: var(--fs-body);
+  text-align: center;
+  margin-bottom: var(--sp-sm);
+}
+
+
+/* --------------------------------------------------------------------------
+   16. Global Bottom Navigation — 하단 5메뉴 (fixed)
+-------------------------------------------------------------------------- */
+#global-nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: var(--frame-max);
+  height: var(--nav-h);
+  z-index: 100;
+  display: flex;
+  background: var(--color-canvas);
+  border-top: var(--hairline-w) solid var(--color-hairline);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+#global-nav a {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: var(--fw-med);
+  color: var(--color-muted);
+  transition: color var(--motion-fast) var(--ease-standard);
+}
+#global-nav a::before {
+  content: "";
+  width: 24px; height: 24px;
+  background-color: currentColor;
+  /* 개별 아이콘(mask-image)을 덮어쓰지 않도록 shorthand 대신 longhand 사용 */
+  -webkit-mask-repeat: no-repeat; -webkit-mask-position: center; -webkit-mask-size: contain;
+          mask-repeat: no-repeat;         mask-position: center;         mask-size: contain;
+}
+#global-nav a:hover { color: var(--color-primary); }
+/* 활성 상태는 app.js가 .is-current 로 관리 (§18) */
+
+/* 내비 아이콘 (mask) */
+#global-nav__home::before {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 10.5 12 3l9 7.5'/%3E%3Cpath d='M5 9.5V21h14V9.5'/%3E%3C/svg%3E");
+          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 10.5 12 3l9 7.5'/%3E%3Cpath d='M5 9.5V21h14V9.5'/%3E%3C/svg%3E");
+}
+#global-nav__recommend::before {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m12 3 2.2 5.8L20 11l-5.8 2.2L12 19l-2.2-5.8L4 11l5.8-2.2z'/%3E%3C/svg%3E");
+          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m12 3 2.2 5.8L20 11l-5.8 2.2L12 19l-2.2-5.8L4 11l5.8-2.2z'/%3E%3C/svg%3E");
+}
+#global-nav__feed::before {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='3' width='7' height='7' rx='1.5'/%3E%3Crect x='14' y='3' width='7' height='7' rx='1.5'/%3E%3Crect x='3' y='14' width='7' height='7' rx='1.5'/%3E%3Crect x='14' y='14' width='7' height='7' rx='1.5'/%3E%3C/svg%3E");
+          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='3' width='7' height='7' rx='1.5'/%3E%3Crect x='14' y='3' width='7' height='7' rx='1.5'/%3E%3Crect x='3' y='14' width='7' height='7' rx='1.5'/%3E%3Crect x='14' y='14' width='7' height='7' rx='1.5'/%3E%3C/svg%3E");
+}
+#global-nav__my-records::before {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m9 4-6 2.5v13L9 17l6 2.5 6-2.5v-13L15 6.5 9 4z'/%3E%3Cpath d='M9 4v13M15 6.5v13'/%3E%3C/svg%3E");
+          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m9 4-6 2.5v13L9 17l6 2.5 6-2.5v-13L15 6.5 9 4z'/%3E%3Cpath d='M9 4v13M15 6.5v13'/%3E%3C/svg%3E");
+}
+#global-nav__profile::before {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='8' r='4'/%3E%3Cpath d='M4 21c0-4 3.5-6 8-6s8 2 8 6'/%3E%3C/svg%3E");
+          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='8' r='4'/%3E%3Cpath d='M4 21c0-4 3.5-6 8-6s8 2 8 6'/%3E%3C/svg%3E");
+}
+
+
+/* --------------------------------------------------------------------------
+   17. 반응형 — 375px 하한, 데스크톱 프레임 유지
+-------------------------------------------------------------------------- */
+@media (max-width: 380px) {
+  :root { --fs-hero: 1.75rem; --fs-section: 1.375rem; }
+  #app-main > section { padding: var(--sp-lg) var(--sp-md); }
+}
+
+
+/* ==========================================================================
+   18. SPA 모드 — JS 활성 시 한 화면만 표시 (점진적 향상)
+   body.spa 클래스는 app.js가 부여. JS 비활성이면 전체 스택 그대로 노출.
+   ========================================================================== */
+body.spa #app-main > section { display: none; }
+body.spa #app-main > section.is-active { display: block; border-top: none; }
+
+/* 집중 화면 — 하단 내비 숨김 (PRD 05) */
+body.focus-mode #global-nav { display: none; }
+body.focus-mode #app-main { padding-bottom: var(--sp-xl); }
+
+/* 내비 활성 상태 (라우트에 따라 app.js가 토글) */
+#global-nav a.is-current { color: var(--color-primary); }
+#global-nav a.is-current::before { background-color: var(--color-accent); }
+
+/* 알림 배지 — 미확인 없을 때 숨김 */
+#global-header__notification-badge[hidden] { display: none; }
+
+
+/* --------------------------------------------------------------------------
+   19. 공용 동적 요소 — 칩 / 태그 / 아바타 / 메타
+-------------------------------------------------------------------------- */
+.chip {
+  border: var(--hairline-w) solid var(--color-hairline);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font-size: var(--fs-caption);
+  font-weight: var(--fw-med);
+  padding: 8px 14px;
+  border-radius: var(--r-pill);
+  white-space: nowrap;
+  transition: border-color var(--motion-fast) var(--ease-standard),
+              background var(--motion-fast) var(--ease-standard),
+              color var(--motion-fast) var(--ease-standard);
+}
+.chip.is-active {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+.tag {
+  display: inline-block;
+  font-size: var(--fs-caption);
+  font-weight: var(--fw-med);
+  padding: 3px 10px;
+  border-radius: var(--r-pill);
+  background: var(--color-primary-tint);
+  color: var(--color-primary-deep);
+}
+.tag--mint { background: #E3F5EF; color: #1E7A63; }
+.tag--pink { background: #FBEAF0; color: #A64D68; }
+.tag--accent { background: #FBEFE4; color: #B5641F; }
+
+/* 고양이 아바타 (이모지) */
+.cat-avatar {
+  display: inline-grid;
+  place-items: center;
+  width: 36px; height: 36px;
+  border-radius: var(--r-pill);
+  background: var(--color-primary-tint);
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.cat-avatar--sm { width: 28px; height: 28px; font-size: 15px; }
+.cat-avatar--lg { width: 56px; height: 56px; font-size: 28px; }
+
+.meta-row { display: flex; align-items: center; gap: var(--sp-sm); }
+.muted { color: var(--color-muted); }
+.faint { color: var(--color-faint); }
+.stack { display: flex; flex-direction: column; gap: var(--sp-md); }
+
+
+/* --------------------------------------------------------------------------
+   20. 지도 마커 — 핀(미방문) vs 발자국(방문)
+-------------------------------------------------------------------------- */
+#home__map { position: relative; overflow: hidden; }
+#home__map::after { display: none; } /* 마커 렌더 시 자리표시 제거 */
+#home__map.is-empty::after { display: grid; }
+
+.map-marker {
+  position: absolute;
+  transform: translate(-50%, -100%);
+  border: none;
+  background: none;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  width: 30px; height: 30px;
+  font-size: 18px;
+  line-height: 1;
+  transition: transform var(--motion-fast) var(--ease-standard);
+}
+.map-marker:hover { transform: translate(-50%, -110%) scale(1.12); }
+.map-marker--pin { color: var(--color-primary); }
+.map-marker--paw { color: var(--color-accent); }
+.map-marker--me {
+  width: 16px; height: 16px;
+  background: var(--color-accent);
+  border: 3px solid #fff;
+  border-radius: var(--r-pill);
+  box-shadow: 0 0 0 3px rgba(232,137,58,.3);
+  transform: translate(-50%, -50%);
+}
+
+

@@ -1,0 +1,466 @@
+/* ==========================================================================
+   CLOWDERY — styles.css
+   디자인 시스템: Feline Explorer (DESIGN_cat.md)
+                  Soft-Tactile · 따뜻한 크림 배경 · 태비 오렌지 · 부드러운 그림자
+                  Plus Jakarta Sans(헤드라인) + Be Vietnam Pro(본문) + Pretendard(한글)
+   브랜드 로고: Catread 폰트 (font/Catread)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   0. 웹폰트 — 디자인 폰트 + 한글 폴백(Pretendard) + 로고(Catread)
+-------------------------------------------------------------------------- */
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap");
+
+/* Clowdery 워드마크 전용 폰트 */
+@font-face {
+  font-family: "Purrfect";
+  src: url("../font/Purrfect.ttf") format("truetype");
+  font-weight: 400;
+  font-display: swap;
+}
+
+
+/* --------------------------------------------------------------------------
+   1. 디자인 토큰
+-------------------------------------------------------------------------- */
+:root {
+  /* Brand palette — Monochrome (흑백) */
+  --color-primary:        #1A1A1A;   /* 블랙 — 채움/활성/브랜딩 */
+  --color-primary-deep:   #111111;   /* 딥 블랙 — 밝은 배경 위 텍스트/로고/링크 */
+  --color-primary-soft:   #333333;   /* 호버 */
+  --color-primary-tint:   #EDEDED;   /* 옅은 그레이 틴트 (선택 배경) */
+  --color-on-primary:     #FFFFFF;   /* 블랙 채움 위 텍스트/아이콘 */
+  --color-accent:         #1A1A1A;   /* 블랙 — 발자국/별점/미확인/포인트 */
+  --color-accent-soft:    #444444;
+  --color-mint:           #EDEDED;   /* Support — 뉴트럴 그레이 */
+  --color-pink:           #EDEDED;   /* Support — 뉴트럴 그레이 */
+
+  /* Canvas & surface — 화이트/그레이 레이어 */
+  --color-canvas:         #F4F4F4;   /* 라이트 그레이 — 앱 배경 */
+  --color-surface:        #FFFFFF;   /* 카드 바탕 */
+  --color-surface-alt:    #ECECEC;   /* 그레이 대체 서피스 */
+  --color-hairline:       #D8D8D8;   /* 그레이 경계선 (0.25px 하이라인) */
+
+  /* Ink & text — 그레이스케일 */
+  --color-heading:        #111111;   /* 제목 */
+  --color-ink:            #1A1A1A;   /* 본문/정보 텍스트 */
+  --color-body:           #3A3A3A;   /* 보조 본문 */
+  --color-muted:          #767676;   /* 캡션 */
+  --color-faint:          #A8A8A8;   /* 최저 강조 / 플레이스홀더 / 비활성 */
+  --color-on-dark:        #FFFFFF;
+
+  /* Hairline — 0.25px 초박 UI 라인 */
+  --hairline-w:           0.25px;
+
+  /* Typography — Jakarta(헤드라인)/Be Vietnam(본문) + Pretendard(한글 폴백) */
+  --font-display: "Plus Jakarta Sans", "Pretendard", "Pretendard Variable",
+                  -apple-system, "Apple SD Gothic Neo", system-ui, sans-serif;
+  --font-sans:    "Be Vietnam Pro", "Pretendard", "Pretendard Variable",
+                  -apple-system, "Apple SD Gothic Neo", system-ui, sans-serif;
+  --font-brand:   "Purrfect", var(--font-display);   /* Clowdery 워드마크 */
+  --fw-black:800;          /* 에디토리얼 헤드라인 */
+  --fw-bold: 700;
+  --fw-semi: 600;
+  --fw-med:  500;
+  --fw-reg:  400;
+
+  --fs-hero:    2.625rem;  /* 42px — 온보딩/히어로 (볼드 에디토리얼) */
+  --fs-section: 1.875rem;  /* 30px — 화면 제목 */
+  --fs-feature: 1.3125rem; /* 21px — 카드/피처 헤드 */
+  --fs-body:    0.9375rem; /* 15px — 본문 */
+  --fs-button:  1.0625rem; /* 17px — CTA 라벨 */
+  --fs-caption: 0.75rem;   /* 12px — 배지/메타 */
+
+  /* Spacing scale — 8px 리듬 (DESIGN_cat.md) */
+  --sp-xs:  4px;
+  --sp-sm:  8px;
+  --sp-md:  12px;
+  --sp-base:16px;
+  --sp-lg:  16px;
+  --sp-xl:  24px;    /* Airy padding */
+  --sp-xxl: 32px;
+  --sp-section: 40px;
+
+  /* Radius — rounded-lg 16px 기본, pill */
+  --r-sm:   12px;
+  --r-md:   12px;
+  --r-lg:   16px;
+  --r-xl:   24px;
+  --r-pill: 9999px;
+
+  /* Elevation — Soft-Tactile 앰비언트 그림자 (그린 틴트, 저투명도) */
+  --shadow-1: 0 6px 20px rgba(38,51,46,0.06), 0 1px 2px rgba(38,51,46,0.05);
+  --shadow-2: 0 16px 34px rgba(38,51,46,0.13);
+  --border-soft: var(--hairline-w) solid rgba(38,51,46,0.14);   /* 0.25px 소프트 보더 */
+
+  /* Motion */
+  --motion-fast:     120ms;
+  --motion-standard: 200ms;
+  --ease-enter:    cubic-bezier(0.2, 0.6, 0.25, 1);
+  --ease-standard: cubic-bezier(0.25, 0.1, 0.25, 1);
+
+  /* App frame */
+  --frame-max:  430px;   /* 모바일 우선 (375~430px) */
+  --header-h:   56px;
+  --nav-h:      64px;
+}
+
+
+/* --------------------------------------------------------------------------
+   2. Reset & Base
+-------------------------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  font-weight: var(--fw-reg);
+  line-height: 1.6;
+  color: var(--color-body);
+  background: var(--color-canvas);
+  /* 데스크톱에서도 모바일 프레임을 중앙에 배치 */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  max-width: var(--frame-max);
+  margin-inline: auto;
+  box-shadow: 0 0 0 var(--hairline-w) var(--color-hairline); /* 프레임 경계(데스크톱 프리뷰용) */
+}
+
+h1, h2, h3, p, ul, figure { margin: 0; }
+ul { list-style: none; padding: 0; }
+a { color: inherit; text-decoration: none; }
+img, figure { max-width: 100%; }
+button { font-family: inherit; cursor: pointer; }
+
+/* 스크린리더 전용 */
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+/* 접근성: 모션 최소화 */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
+
+/* --------------------------------------------------------------------------
+   3. Global Header — 상단 바 (sticky)
+-------------------------------------------------------------------------- */
+#global-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--header-h);
+  padding: 0 var(--sp-lg);
+  background: var(--color-canvas);
+  border-bottom: var(--hairline-w) solid var(--color-hairline);
+}
+
+#global-header__brand { display: flex; align-items: baseline; gap: var(--sp-sm); }
+
+#global-header__logo {
+  font-size: 1.25rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: -0.02em;
+  color: var(--color-primary-deep);
+}
+
+#global-header__tagline {
+  font-size: var(--fs-caption);
+  color: var(--color-ink);
+  font-weight: var(--fw-med);
+  font-style: italic;
+  text-transform: lowercase;
+}
+
+#global-header__actions { display: flex; align-items: center; gap: var(--sp-xs); }
+
+#global-header__search-btn,
+#global-header__notification-btn {
+  position: relative;
+  width: 40px; height: 40px;
+  border: none; background: transparent;
+  border-radius: var(--r-sm);
+  display: grid; place-items: center;
+  color: var(--color-ink);
+  transition: background var(--motion-fast) var(--ease-standard);
+}
+#global-header__search-btn:hover,
+#global-header__notification-btn:hover { background: var(--color-primary-tint); }
+
+/* 아이콘: mask 로 currentColor 를 따르게 함 (SVG 인라인 대체) */
+#global-header__search-btn::before,
+#global-header__notification-btn::before {
+  content: "";
+  width: 22px; height: 22px;
+  background-color: currentColor;
+  -webkit-mask: center / contain no-repeat;
+          mask: center / contain no-repeat;
+}
+#global-header__search-btn::before {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='m21 21-4.3-4.3'/%3E%3C/svg%3E");
+          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='m21 21-4.3-4.3'/%3E%3C/svg%3E");
+}
+#global-header__notification-btn::before {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9'/%3E%3Cpath d='M10.3 21a1.94 1.94 0 0 0 3.4 0'/%3E%3C/svg%3E");
+          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9'/%3E%3Cpath d='M10.3 21a1.94 1.94 0 0 0 3.4 0'/%3E%3C/svg%3E");
+}
+
+/* 미확인 배지 — 오렌지 도트 */
+#global-header__notification-badge {
+  position: absolute;
+  top: 8px; right: 8px;
+  width: 8px; height: 8px;
+  background: var(--color-accent);
+  border-radius: var(--r-pill);
+  border: 1.5px solid var(--color-canvas);
+}
+
+
+/* --------------------------------------------------------------------------
+   4. Main & Screen 공통
+-------------------------------------------------------------------------- */
+#app-main {
+  flex: 1;
+  padding-bottom: calc(var(--nav-h) + var(--sp-xl)); /* 하단 내비 가림 방지 */
+}
+
+/* 각 화면(section) — 스택 프리뷰에서 카드처럼 구분 */
+#app-main > section {
+  padding: var(--sp-xl) var(--sp-lg);
+  border-top: 8px solid var(--color-surface-alt);
+}
+#app-main > section:first-child { border-top: none; }
+
+/* 화면 헤더 */
+.screen__header { margin-bottom: var(--sp-lg); }
+
+.screen__header h2,
+#app-main > section > h2 {
+  font-size: var(--fs-section);
+  font-weight: var(--fw-black);
+  letter-spacing: -0.035em;
+  color: var(--color-heading);
+  line-height: 1.15;
+}
+
+.screen__subtitle {
+  margin-top: var(--sp-md);
+  color: var(--color-muted);
+  font-size: var(--fs-body);
+  line-height: 1.55;
+  max-width: 32ch;
+}
+
+
+/* --------------------------------------------------------------------------
+   5. 컴포넌트 — 버튼 (pill 지오메트리)
+-------------------------------------------------------------------------- */
+/* Primary CTA — Deep Purple pill (Clowdery의 "one action, one color") */
+#onboarding__confirm-btn,
+#place-detail__write-btn,
+#write__submit-btn,
+#clowders__create-btn,
+#completion-modal__share-btn,
+#share-landing__open-app {
+  appearance: none;
+  border: none;
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  font-size: var(--fs-button);
+  font-weight: var(--fw-bold);
+  padding: 14px 24px;
+  border-radius: 0;
+  min-height: 47px;
+  transition: transform var(--motion-fast) var(--ease-standard),
+              background var(--motion-fast) var(--ease-standard);
+}
+#onboarding__confirm-btn:hover,
+#place-detail__write-btn:hover,
+#write__submit-btn:hover,
+#clowders__create-btn:hover,
+#completion-modal__share-btn:hover,
+#share-landing__open-app:hover { background: var(--color-primary-soft); }
+#onboarding__confirm-btn:active,
+#place-detail__write-btn:active,
+#write__submit-btn:active,
+#clowders__create-btn:active,
+#completion-modal__share-btn:active,
+#share-landing__open-app:active { transform: scale(0.98); }
+
+/* Outline CTA — 공유/보조 액션 */
+#place-detail__share-btn,
+#clowder-detail__invite-btn,
+#clowder-detail__settings-btn,
+#search__back-to-map,
+#completion-modal__skip-btn {
+  appearance: none;
+  background: transparent;
+  color: var(--color-primary-deep);
+  border: var(--hairline-w) solid var(--color-primary-deep);
+  font-size: var(--fs-button);
+  font-weight: var(--fw-semi);
+  padding: 14px 24px;
+  border-radius: 0;
+  min-height: 47px;
+  transition: background var(--motion-fast) var(--ease-standard);
+}
+#place-detail__share-btn:hover,
+#clowder-detail__invite-btn:hover,
+#clowder-detail__settings-btn:hover,
+#search__back-to-map:hover,
+#completion-modal__skip-btn:hover { background: var(--color-primary-tint); }
+
+
+/* --------------------------------------------------------------------------
+   6. 온보딩 — 고양이 선택
+-------------------------------------------------------------------------- */
+#screen-onboarding__title {
+  font-size: var(--fs-hero);
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+}
+
+#onboarding__cat-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-md);
+  margin: var(--sp-lg) 0 var(--sp-xl);
+}
+
+/* 가로형 카드 — 이모지 아바타 + 이름·설명 (세로 리스트) */
+.onboarding__cat-item {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-lg);
+  padding: var(--sp-lg);
+  background: var(--color-surface);
+  border: var(--hairline-w) solid var(--color-hairline);
+  border-radius: var(--r-lg);
+  color: var(--color-ink);
+  cursor: pointer;
+  transition: border-color var(--motion-fast) var(--ease-standard),
+              background var(--motion-fast) var(--ease-standard),
+              transform var(--motion-fast) var(--ease-standard);
+}
+.onboarding__cat-emoji {
+  display: grid;
+  place-items: center;
+  width: 52px; height: 52px;
+  flex-shrink: 0;
+  font-size: 28px;
+  border-radius: var(--r-pill);
+  background: var(--color-surface-alt);
+  transition: background var(--motion-fast) var(--ease-standard);
+}
+.onboarding__cat-text { display: flex; flex-direction: column; gap: 3px; }
+.onboarding__cat-name { font-weight: var(--fw-bold); font-size: var(--fs-feature); color: var(--color-heading); }
+.onboarding__cat-desc { font-size: var(--fs-caption); color: var(--color-muted); line-height: 1.45; }
+
+.onboarding__cat-item:hover { border-color: var(--color-primary); transform: translateY(-2px); }
+.onboarding__cat-item:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 2px; }
+.onboarding__cat-item.is-active {
+  border-color: var(--color-primary);
+  background: var(--color-primary-tint);
+  box-shadow: inset 0 0 0 1px var(--color-primary);
+}
+.onboarding__cat-item.is-active .onboarding__cat-emoji { background: #fff; }
+
+#onboarding__footer { display: flex; }
+#onboarding__confirm-btn { width: 100%; }
+
+
+/* --------------------------------------------------------------------------
+   7. 홈 — 검색바 / 카테고리 필터 / 지도 / 리스트
+-------------------------------------------------------------------------- */
+#home__search-bar { margin-bottom: var(--sp-md); }
+
+#home__search-input,
+#write__oneline-input,
+#write__date-input {
+  width: 100%;
+  font-family: inherit;
+  font-size: var(--fs-body);
+  color: var(--color-ink);
+  background: var(--color-surface);
+  border: var(--hairline-w) solid var(--color-hairline);
+  border-radius: var(--r-sm);
+  padding: 12px var(--sp-lg);
+  transition: border-color var(--motion-fast) var(--ease-standard);
+}
+#home__search-input::placeholder,
+#write__oneline-input::placeholder { color: var(--color-faint); }
+#home__search-input:focus,
+#write__oneline-input:focus,
+#write__date-input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+#home__category-filter {
+  display: flex;
+  gap: var(--sp-sm);
+  overflow-x: auto;
+  margin-bottom: var(--sp-md);
+  padding-bottom: 4px;
+}
+
+/* 지도 자리표시 — 좌표 기반 미니맵 (실지도 키 없이도 동작) */
+#home__map {
+  height: 260px;
+  border-radius: var(--r-lg);
+  background:
+    radial-gradient(circle at 18% 22%, rgba(26,26,26,0.05), transparent 42%),
+    radial-gradient(circle at 82% 78%, rgba(26,26,26,0.04), transparent 40%),
+    repeating-linear-gradient(0deg,  var(--color-surface) 0 39px, var(--color-hairline) 39px 40px),
+    repeating-linear-gradient(90deg, var(--color-surface) 0 39px, var(--color-hairline) 39px 40px);
+  border: var(--hairline-w) solid var(--color-hairline);
+  display: grid;
+  place-items: center;
+  color: var(--color-muted);
+  font-size: var(--fs-caption);
+  margin-bottom: var(--sp-md);
+}
+#home__map::after {
+  content: "🐾 이 근처에 아직 표시할 곳이 없어요";
+  padding: 0 var(--sp-lg);
+  text-align: center;
+}
+
+#home__view-toggle {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  background: var(--color-surface-alt);
+  border: var(--hairline-w) solid var(--color-hairline);
+  border-radius: 0;
+  margin-bottom: var(--sp-md);
+}
+#home__view-toggle button {
+  border: none;
+  background: transparent;
+  color: var(--color-muted);
+  font-weight: var(--fw-semi);
+  font-size: var(--fs-caption);
+  padding: 8px 18px;
+  border-radius: 0;
+}
+#home__view-toggle button:first-child { /* 기본 활성 표시(프리뷰) */
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+

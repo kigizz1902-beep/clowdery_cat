@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="description" content="Clowdery — 고양이처럼 동네를 탐험하고, 다녀온 곳에 발자국을 남겨 친구들과 공유하는 로컬 경험 플랫폼" />
+  <meta name="theme-color" content="#33206A" />
+  <title>Clowdery · Discover like a cat</title>
+  <!-- 스타일 (순서대로: 토큰/베이스 → 컴포넌트 → 테마 → 반응형) -->
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/theme.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+
+<!--
+  ============================================================================
+  CLOWDERY — 전체 구조 스켈레톤 (v3.1 PRD 기반)
+  - HTML5 시멘틱 태그로 화면(section)을 분리
+  - 각 영역에 고유 id 부여 (수정/스타일링/라우팅 대비)
+  - 이 단계에서는 레이아웃 뼈대와 자리표시만 존재, 기능 로직 없음
+  - 화면 매핑: PRD 05. 정보 구조와 화면 (SCREEN 01~12)
+  ============================================================================
+-->
+
+<body id="clowdery-app">
+
+  <!-- ========================================================================
+       GLOBAL HEADER — 상단 바 (로고 + 검색 진입 + 알림 아이콘)
+       PRD 05: 상단 알림, 미확인 배지 표시
+  ========================================================================= -->
+  <header id="global-header" role="banner">
+    <div id="global-header__brand">
+      <!-- 로고 / 서비스명 (한글 병기: 클라우더리) -->
+      <h1 id="global-header__logo">Clowdery</h1>
+      <p id="global-header__tagline">Discover like a cat</p>
+    </div>
+
+    <div id="global-header__actions">
+      <!-- 검색 진입 버튼 (홈 검색으로 연결 예정) -->
+      <button type="button" id="global-header__search-btn" aria-label="검색"></button>
+      <!-- 알림 진입 + 미확인 배지 -->
+      <button type="button" id="global-header__notification-btn" aria-label="알림">
+        <span id="global-header__notification-badge" aria-hidden="true"></span>
+      </button>
+    </div>
+  </header>
+
+
+  <!-- ========================================================================
+       MAIN — 화면 컨테이너
+       각 screen-* 섹션이 라우팅 단위. 현재는 전 화면을 나열해 구조 파악용.
+  ========================================================================= -->
+  <main id="app-main" role="main">
+
+    <!-- ====================================================================
+         온보딩 · 고양이 선택  (PRD 06 캐릭터 시스템 / 첫 진입)
+         URL: /onboarding
+    ===================================================================== -->
+    <section id="screen-onboarding" aria-labelledby="screen-onboarding__title">
+      <header class="screen__header">
+        <h2 id="screen-onboarding__title">함께 탐험할 고양이를 골라주세요 🐱</h2>
+        <p class="screen__subtitle">고양이가 첫 추천을 골라줘요. 발자국이 쌓일수록 취향에 맞게 더 똑똑해져요.</p>
+      </header>
+
+      <!-- 5종 고양이 선택 카드 (치즈/턱시도/삼색/러시안블루/코숏) -->
+      <ul id="onboarding__cat-list">
+        <li class="onboarding__cat-item" data-cat="cheese" tabindex="0" role="button" aria-pressed="false">
+          <span class="onboarding__cat-emoji">🧀</span>
+          <span class="onboarding__cat-text">
+            <span class="onboarding__cat-name">치즈 고양이</span>
+            <span class="onboarding__cat-desc">새로운 맛집을 먼저 찾는 타입</span>
+          </span>
+        </li>
+        <li class="onboarding__cat-item" data-cat="tuxedo" tabindex="0" role="button" aria-pressed="false">
+          <span class="onboarding__cat-emoji">🎩</span>
+          <span class="onboarding__cat-text">
+            <span class="onboarding__cat-name">턱시도 고양이</span>
+            <span class="onboarding__cat-desc">문화 공간을 놓치지 않는 타입</span>
+          </span>
+        </li>
+        <li class="onboarding__cat-item" data-cat="calico" tabindex="0" role="button" aria-pressed="false">
+          <span class="onboarding__cat-emoji">🎨</span>
+          <span class="onboarding__cat-text">
+            <span class="onboarding__cat-name">삼색 고양이</span>
+            <span class="onboarding__cat-desc">구경하고 수집하는 타입</span>
+          </span>
+        </li>
+        <li class="onboarding__cat-item" data-cat="russianblue" tabindex="0" role="button" aria-pressed="false">
+          <span class="onboarding__cat-emoji">💙</span>
+          <span class="onboarding__cat-text">
+            <span class="onboarding__cat-name">러시안블루</span>
+            <span class="onboarding__cat-desc">조용한 곳을 오래 기억하는 타입</span>
+          </span>
+        </li>
+        <li class="onboarding__cat-item" data-cat="koshort" tabindex="0" role="button" aria-pressed="false">
+          <span class="onboarding__cat-emoji">🐈</span>
+          <span class="onboarding__cat-text">
+            <span class="onboarding__cat-name">코리안숏헤어</span>
+            <span class="onboarding__cat-desc">동네 구석구석 누비는 타입</span>
+          </span>
+        </li>
+      </ul>
+
+      <footer id="onboarding__footer">
+        <button type="button" id="onboarding__confirm-btn">이 고양이로 시작하기</button>
+      </footer>
+    </section>
+
+
+    <!-- ====================================================================
+         SCREEN 01 · 메인 홈  (지도 + 핀/발자국 + 검색 + 필터)
+         URL: /
+    ===================================================================== -->
+    <section id="screen-home" aria-labelledby="screen-home__title">
+      <h2 id="screen-home__title" class="sr-only">🗺️ 메인 홈 — 동네 탐험 지도</h2>
+
+      <!-- 검색 + 카테고리 필터 바 -->
+      <div id="home__search-bar">
+        <input type="search" id="home__search-input" placeholder="🔍 어디로 탐험 가볼까요? (장소·지역)" />
+      </div>
+      <nav id="home__category-filter" aria-label="카테고리 필터">
+        <!-- 카테고리 칩: 맛집/카페/전시/팝업/쇼핑/야외 등 -->
+      </nav>
+
+      <!-- 지도 영역 (Kakao/Google Maps 렌더 대상) -->
+      <div id="home__map" role="application" aria-label="지도">
+        <!-- 핀 + 방문 발자국 마커가 렌더될 컨테이너 -->
+      </div>
+
+      <!-- 지도/리스트 전환 + 리스트 대안 (접근성: 지도 정보 리스트 대안) -->
+      <div id="home__view-toggle">
+        <button type="button" id="home__toggle-map">지도</button>
+        <button type="button" id="home__toggle-list">리스트</button>
+      </div>
+      <ul id="home__place-list" aria-label="주변 장소 리스트">
+        <!-- 주변 장소 카드 목록 -->
+      </ul>
+    </section>
+
+
+    <!-- ====================================================================
+         SCREEN 02 · 장소 상세  (정보 + 지인 기록 + 추천 이유 + 유사 장소)
+         URL: /place/:id  · 집중 화면(하단 내비 축소/숨김)
+    ===================================================================== -->
+    <section id="screen-place-detail" aria-labelledby="screen-place-detail__title">
+      <article id="place-detail__main">
+        <header class="screen__header">
+          <h2 id="screen-place-detail__title">📍 장소 이름</h2>
+          <p id="place-detail__meta">카테고리 · 주소 · 영업시간</p>
+        </header>
+
+        <figure id="place-detail__hero">
+          <!-- 대표 이미지 -->
+        </figure>
+
+        <!-- 추천 이유 배너 (근거 우선 카피) -->
+        <p id="place-detail__reason"></p>
+
+        <!-- 지인(클라우더) 기록 요약 -->
+        <section id="place-detail__friend-records" aria-label="지인 기록">
+        </section>
+
+        <!-- 유사 장소 추천 -->
+        <aside id="place-detail__similar" aria-label="유사 장소">
+        </aside>
+      </article>
+
+      <!-- 기록 · 공유 CTA -->
+      <footer id="place-detail__cta">
+        <button type="button" id="place-detail__write-btn">발자국 남기기</button>
+        <button type="button" id="place-detail__share-btn">공유하기</button>
+      </footer>
+    </section>
+
+
+    <!-- ====================================================================
+         SCREEN 03 · 발자국 남기기  (사진 + 한줄평 + 별점 + 공개 범위)
+         URL: /place/:id/write  · 집중 화면
+    ===================================================================== -->
+    <section id="screen-write" aria-labelledby="screen-write__title">
+      <header class="screen__header">
+        <h2 id="screen-write__title">🐾 발자국 남기기</h2>
+      </header>
+
+      <form id="write__form">
+        <!-- 사진 0~1장 (선택) -->
+        <div id="write__photo-field">
+          <input type="file" id="write__photo-input" accept="image/jpeg,image/png,image/webp" />
+        </div>
+
+        <!-- 한줄평 (필수, 1~80자) -->
+        <div id="write__oneline-field">
+          <textarea id="write__oneline-input" maxlength="80" placeholder="이곳은 어땠나요? 한 줄로 남겨주세요"></textarea>
+        </div>
+
+        <!-- 별점 (선택, 0.5 단위 1~5) -->
+        <fieldset id="write__rating-field">
+          <legend>별점</legend>
+        </fieldset>
+
+        <!-- 방문 날짜 (기본 오늘, 미래 불가) -->
+        <div id="write__date-field">
+          <input type="date" id="write__date-input" />
+        </div>
+
+        <!-- 공개 범위 (나만 보기 / 클라우더 / 전체 공개) -->
+        <fieldset id="write__visibility-field">
+          <legend>공개 범위</legend>
+        </fieldset>
+
+        <!-- 공유할 클라우더 선택 (클라우더 없으면 숨김) -->
+        <fieldset id="write__clowder-select-field">
+          <legend>공유할 클라우더</legend>
+        </fieldset>
+
+        <button type="submit" id="write__submit-btn">저장하기</button>
+      </form>
+    </section>
+
+
+    <!-- ====================================================================
+         SCREEN 04 · AI(개인화) 추천  (추천 리스트 + 추천 이유)
+         URL: /recommend
+    ===================================================================== -->
+    <section id="screen-recommend" aria-labelledby="screen-recommend__title">
+      <header class="screen__header">
+        <h2 id="screen-recommend__title">✨ 오늘의 추천</h2>
+      </header>
+      <ul id="recommend__list" aria-label="개인화 추천 리스트">
+        <!-- 추천 카드: 장소 + 추천 이유(근거) -->
+      </ul>
+    </section>
+
+
+    <!-- ====================================================================
+         SCREEN 05 · 클라우더 피드  (클라우더 탭 + 기록 카드 + 반응)
+         URL: /feed
+    ===================================================================== -->
+    <section id="screen-feed" aria-labelledby="screen-feed__title">
+      <h2 id="screen-feed__title" class="sr-only">🐈 클라우더 피드</h2>
+
+      <!-- 클라우더(그룹) 탭 필터 -->
+      <nav id="feed__clowder-tabs" aria-label="클라우더 선택">
+      </nav>
+
+      <!-- 기록 카드 피드 -->
+      <ul id="feed__record-list">
+        <!-- 기록 카드 템플릿 (구조 예시 1개) -->
+        <li class="feed__record-card" aria-label="기록 카드">
+          <article class="record-card">
+            <header class="record-card__header">
+              <!-- 작성자 아바타(고양이) + 닉네임 + 장소 -->
+            </header>
+            <figure class="record-card__photo"></figure>
+            <p class="record-card__oneline"></p>
+
+            <!-- 5종 리액션 -->
+            <div class="record-card__reactions" role="group" aria-label="리액션">
+              <button type="button" data-reaction="like">😻 좋다냥</button>
+              <button type="button" data-reaction="wanna-go">🐾 나도 갈래냥</button>
+              <button type="button" data-reaction="vibe">😽 분위기 최고냥</button>
+              <button type="button" data-reaction="together">🐈 같이 가자냥</button>
+              <button type="button" data-reaction="envy">😿 부럽다냥</button>
+            </div>
+
+            <!-- 짧은 메시지 (100자, 최신 2개 미리보기) -->
+            <div class="record-card__messages" aria-label="메시지"></div>
+          </article>
+        </li>
+      </ul>
+    </section>
+
+
+    <!-- ====================================================================
+         SCREEN 06 · 탐험 일지  (월별/카테고리/지역 내 기록)
+         URL: /my-records
+    ===================================================================== -->
+    <section id="screen-my-records" aria-labelledby="screen-my-records__title">
+      <header class="screen__header">
+        <h2 id="screen-my-records__title">📖 탐험 일지</h2>
+      </header>
+
+      <!-- 기간 / 카테고리 / 지역 필터 -->
+      <nav id="my-records__filter" aria-label="기록 필터">
+      </nav>
+
+      <!-- 날짜순 내 기록 목록 -->
+      <ul id="my-records__list" aria-label="내 발자국 목록">
+      </ul>
+    </section>
+
+
+    <!-- ====================================================================
+         SCREEN 07 · 검색 결과  (키워드/지역 검색 + 지도 복귀)
+         URL: /search?q=
+    ===================================================================== -->
+    <section id="screen-search" aria-labelledby="screen-search__title">
+      <header class="screen__header">
+        <h2 id="screen-search__title">🔍 검색 결과</h2>
+      </header>
+      <ul id="search__result-list" aria-label="검색 결과 목록">
+      </ul>
+      <button type="button" id="search__back-to-map">지도로 돌아가기</button>
+    </section>
+
+
+    <!-- ====================================================================
+         SCREEN 08 · 클라우더 관리  (목록 + 생성 + 초대)
+         URL: /clowders
+    ===================================================================== -->
+    <section id="screen-clowders" aria-labelledby="screen-clowders__title">
+      <header class="screen__header">
+        <h2 id="screen-clowders__title">😺 클라우더</h2>
+        <button type="button" id="clowders__create-btn">클라우더 만들기</button>
+      </header>
+      <ul id="clowders__list" aria-label="내 클라우더 목록">
+      </ul>
+    </section>
+
+
+    <!-- ====================================================================
+         SCREEN 09 · 클라우더 상세  (멤버 + 피드 + 설정)
+         URL: /clowders/:id  · 집중 화면
+    ===================================================================== -->
+    <section id="screen-clowder-detail" aria-labelledby="screen-clowder-detail__title">
+      <header class="screen__header">
+        <h2 id="screen-clowder-detail__title">😻 클라우더 이름</h2>
+      </header>
+
+      <!-- 멤버 목록 -->
+      <section id="clowder-detail__members" aria-label="멤버">
+      </section>
+
+      <!-- 클라우더 피드 -->
+      <section id="clowder-detail__feed" aria-label="클라우더 피드">
+      </section>
+
+      <!-- 초대 / 설정 (관리자: 초대·멤버 삭제·삭제) -->
+      <footer id="clowder-detail__actions">
+        <button type="button" id="clowder-detail__invite-btn">초대하기</button>
+        <button type="button" id="clowder-detail__settings-btn">설정</button>
+      </footer>
+    </section>
+
+
+    <!-- ====================================================================
+         SCREEN 10 · 알림  (리액션 / 메시지 / 새 기록)
+         URL: /notifications
+    ===================================================================== -->
+    <section id="screen-notifications" aria-labelledby="screen-notifications__title">
+      <header class="screen__header">
+        <h2 id="screen-notifications__title">🔔 알림</h2>
+      </header>
+      <ul id="notifications__list" aria-label="알림 목록">
+        <!-- 알림 항목: unread / read 상태 구분 -->
+      </ul>
+    </section>
+
+
+    <!-- ====================================================================
+         SCREEN 11 · 프로필 / 설정  (캐릭터 + 통계 + 설정)
+         URL: /profile
+    ===================================================================== -->
+    <section id="screen-profile" aria-labelledby="screen-profile__title">
+      <header id="profile__header">
+        <!-- 고양이 아바타 + 닉네임 -->
+        <h2 id="screen-profile__title">🐱 닉네임</h2>
+      </header>
+
+      <!-- 탐험 통계 (단순 표시용) -->
+      <section id="profile__stats" aria-label="탐험 통계">
+      </section>
+
+      <!-- 설정 그룹: 고양이 변경 / 클라우더 / 데이터(엑셀) / 알림 -->
+      <nav id="profile__settings" aria-label="설정">
+        <button type="button" id="profile__settings-cat">고양이 변경</button>
+        <button type="button" id="profile__settings-clowder">클라우더 설정</button>
+        <button type="button" id="profile__settings-data">데이터 내보내기·불러오기</button>
+        <button type="button" id="profile__settings-notification">알림 설정</button>
+      </nav>
+    </section>
+
+
+    <!-- ====================================================================
+         SCREEN 12 · 공유 랜딩  (외부 유입용 기록·장소 정보)
+         URL: /share/:recordId  · 집중 화면 · 하단 내비 숨김
+         개인정보(프로필) 비노출
+    ===================================================================== -->
+    <section id="screen-share-landing" aria-labelledby="screen-share-landing__title">
+      <article id="share-landing__record">
+        <h2 id="screen-share-landing__title">🐾 공유된 발자국</h2>
+        <figure id="share-landing__photo"></figure>
+        <p id="share-landing__oneline"></p>
+        <p id="share-landing__place"></p>
+      </article>
+      <footer id="share-landing__cta">
+        <!-- 앱 진입 유도 (클라우더리 한글 병기) -->
+        <button type="button" id="share-landing__open-app">Clowdery(클라우더리) 열기</button>
+      </footer>
+    </section>
+
+  </main>
+
+
+  <!-- ========================================================================
+       COMPLETION MODAL — 저장 완료 후 외부 공유 여부 모달
+       PRD 07: 저장 완료 플로우 4단계
+       (구조상 body 하위 오버레이로 배치, 기본 비활성)
+  ========================================================================= -->
+  <div id="completion-modal" role="dialog" aria-modal="true" aria-labelledby="completion-modal__title" hidden>
+    <div id="completion-modal__panel">
+      <div id="completion-modal__emoji" aria-hidden="true">🐾</div>
+      <h2 id="completion-modal__title">새로운 발자국이 생겼다냥!</h2>
+      <p id="completion-modal__sub">친구들에게도 이 발자국을 보여줄까요?</p>
+      <button type="button" id="completion-modal__share-btn">공유 링크 만들기</button>
+      <button type="button" id="completion-modal__skip-btn">나중에 할게요</button>
+    </div>
+  </div>
+
+
+  <!-- ========================================================================
+       GLOBAL BOTTOM NAVIGATION — 하단 5개 메뉴
+       PRD 05: 홈·추천·피드·탐험 일지·프로필에서 항상 표시
+       (집중 화면에서는 숨김/축소 — 로직은 이후 단계)
+  ========================================================================= -->
+  <nav id="global-nav" role="navigation" aria-label="주요 메뉴">
+    <a href="/" id="global-nav__home">홈</a>
+    <a href="/recommend" id="global-nav__recommend">추천</a>
+    <a href="/feed" id="global-nav__feed">피드</a>
+    <a href="/my-records" id="global-nav__my-records">탐험 일지</a>
+    <a href="/profile" id="global-nav__profile">프로필</a>
+  </nav>
+
+
+  <!-- 앱 스크립트 (순서 중요: core → screens → app) -->
+  <script src="js/core.js"></script>
+  <script src="js/screens.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
